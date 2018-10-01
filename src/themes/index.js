@@ -20,8 +20,8 @@ const Theme = {
     }
   },
   bottomTab: {
-    active: '#4ea9de',
-    inactive: "gray",
+    active: '#ea8024',
+    inactive: "#7f7f7f",
     text: "#FFFFFF"
   },
   palette: {

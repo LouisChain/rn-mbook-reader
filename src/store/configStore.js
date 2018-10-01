@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import reducer from "@reducers";
 import thunk from "redux-thunk";
-import { navMiddleWare } from "@containers/themes";
+import { navMiddleWare } from "@containers/navigator";
 import logger from "redux-logger";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; 

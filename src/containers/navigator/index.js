@@ -1,9 +1,18 @@
-import React from "react";
-import { Button } from "react-native";
+import React, { Component } from "react";
+import { Button, View, BackHandler } from "react-native";
+import { connect } from "react-redux";
 import {
   createStackNavigator,
   createBottomTabNavigator
 } from "react-navigation";
+import {
+  reduxifyNavigator,
+  createReactNavigationReduxMiddleware
+} from "react-navigation-redux-helpers";
+import PropTypes from "prop-types";
+import Theme from "@themes"
+import Resources from "@resources"
+import { NavigationActions } from "react-navigation";
 import routeConfigMap from "./router";
 import theme from "@themes";
 import IconBadge from "@containers/notifications/badge"
@@ -75,4 +84,71 @@ class RootNavigator extends React.Component {
   }
 }
 
-export { RootNavigator };
+class RootContainer extends Component {
+
+  static childContextTypes = {
+    theme: PropTypes.object,
+    resource: PropTypes.object
+  }
+
+  _theme = Theme;
+  _resource = Resources;
+
+  getChildContext() {
+    return {
+      theme: this._theme,
+      resource: this._resource
+    }
+  }
+  static router = {
+    ...RootNavigator.router,
+    getStateForAction: (action, lastState) => {
+      return RootNavigator.router.getStateForAction(action, lastState);
+    },
+  };
+
+  componentDidUpdate(lastProps) {
+    // Navigation state has changed from lastProps.navigation.state to this.props.navigation.state
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  onBackPress = () => {
+    const { dispatch, state } = this.props.navigation;
+    if (state.index === 0) {
+      return false;
+    }
+    dispatch(NavigationActions.back());
+    return true;
+  };
+
+  render() {
+    const { navigation } = this.props;
+    return (
+      <View style={{ flex: 1 }}>
+        <RootNavigator navigation={navigation} />
+      </View>
+    );
+  }
+}
+
+const navMiddleWare = createReactNavigationReduxMiddleware(
+  "appNavigator",
+  state => state.nav
+);
+
+const AppWithNavigationState = reduxifyNavigator(RootContainer, "appNavigator");
+
+const mapStateToProps = (state) => ({
+  state: state.nav,
+});
+
+const AppNavigator = connect(mapStateToProps)(AppWithNavigationState);
+
+export { RootNavigator, RootContainer, AppNavigator, navMiddleWare };

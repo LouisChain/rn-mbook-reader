@@ -1,7 +1,7 @@
-import { ThemeContainer } from "@containers/themes";
+import { RootContainer } from "@containers/navigator";
 
-const initialAction = ThemeContainer.router.getActionForPathAndParams("BottomTab");
-const initialState = ThemeContainer.router.getStateForAction(initialAction);
+const initialAction = RootContainer.router.getActionForPathAndParams("BottomTab");
+const initialState = RootContainer.router.getStateForAction(initialAction);
 console.log("Navigation reducer started here >>>")
 console.log(initialState);
 const reducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const reducer = (state = initialState, action) => {
     case "Navigation/NAVIGATE":
     case "Navigation/COMPLETE_TRANSITION":
     case "Navigation/BACK":
-      const nextState = ThemeContainer.router.getStateForAction(action, state);
+      const nextState = RootContainer.router.getStateForAction(action, state);
       return nextState;
     default:
       return state;

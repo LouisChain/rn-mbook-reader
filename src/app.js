@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from "react";
-import { AppWithThemeNavigator } from "@containers/themes";
+import { AppNavigator } from "@containers/navigator";
 import { Provider } from "react-redux";
 import configStore from "@store/configStore";
 
@@ -15,7 +15,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={configStore().store}>
-        <AppWithThemeNavigator />
+        <AppNavigator />
       </Provider>
     );
   }
