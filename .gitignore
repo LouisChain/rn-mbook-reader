@@ -63,3 +63,4 @@ android/.settings/org.eclipse.buildship.core.prefs
 android/app/.classpath
 android/app/.project
 android/app/.settings/org.eclipse.buildship.core.prefs
+ios/rn_mbookreader.xcodeproj/
