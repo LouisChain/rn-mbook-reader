@@ -9,19 +9,7 @@ export default class App extends PureComponent {
   }
 
   renderItem = ({ item, index }) => {
-    return <TouchableOpacity style={{
-      flex: 1,
-      margin: 5,
-      minWidth: 120,
-      maxWidth: 300,
-      height: 48,
-      maxHeight: 48,
-      borderColor: 'gray',
-      alignItems: "center",
-      justifyContent: "center",
-      borderWidth: 1,
-      borderRadius: 3
-    }}
+    return <TouchableOpacity style={styles.container}
       onPress={() => this.onPressCategory(item)}>
       <Text style={styles.text} numberOfLines={1}>{item.name}</Text>
     </TouchableOpacity>
@@ -45,6 +33,19 @@ export default class App extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 5,
+    minWidth: 120,
+    maxWidth: 300,
+    height: 48,
+    maxHeight: 48,
+    borderColor: 'gray',
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderRadius: 3
+  },
   list: {
     justifyContent: 'center',
     flexDirection: 'row',

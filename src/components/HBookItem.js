@@ -13,7 +13,6 @@ export default class HBookItem extends PureComponent {
     let { cover, coverLink, title, author, stars } = this.props.book;
     return (
       <TouchableOpacity
-        style={styles.homeListItem}
         onPress={this.props.onPress}
       >
         <View style={styles.container}>
@@ -30,17 +29,19 @@ export default class HBookItem extends PureComponent {
   }
 }
 
+const w = 88;
+const h = 128;
 const styles = StyleSheet.create({
   container: {
     marginRight: 16,
     flex: 1,
-    width: 88
+    width: w
   },
   cover: {
     borderTopLeftRadius: 3,
     borderTopRightRadius: 3,
-    width: 88,
-    height: 128
+    width: w,
+    height: h
   },
   title: {
     marginTop: 8,

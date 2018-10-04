@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const defaultPagination = 20;
 const instance = axios.create({
   baseURL: "http://45.32.99.230:3000",
   timeout: 60000
@@ -8,7 +9,7 @@ const instance = axios.create({
 export function fetchStore() {
   return instance.get("/store/", {
     params: {
-      limit: 10
+      limit: defaultPagination
     }
   });
 }
