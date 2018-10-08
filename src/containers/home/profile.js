@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from "react-redux";
-import { loginWithFacebook } from "@actions/auth";
+import { loginWithFacebook, doLogout } from "@actions/auth";
 import Icon from "@components/Icon";
 import { Avatar, SocialIcon } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -12,29 +12,29 @@ class Profile extends PureComponent {
   };
 
   render() {
-    let currentUser = this.props.currentUser;
+    let user = this.props.user;
     let { theme } = this.context;
     return (
       <ScrollView style={styles.container}>
-        <View style={{
-          paddingVertical: 32,
-          justifyContent: 'center',
-          paddingTop: 60,
-          alignItems: 'center',
-          borderRadius: 3,
-          backgroundColor: "white"
-        }}>
-          <Avatar
-            xlarge
-            rounded
-            icon={{ name: 'account-circle' }}
-            onPress={() => console.log("Clicked Avatar!")}
-            activeOpacity={0.7}
-            containerStyle={{}}
-          />
-          {currentUser ?
-            <Text style={{ fontSize: 22, fontWeight: "bold", paddingVertical: 16 }}>{currentUser}</Text>
-            :
+        {user ?
+          <View style={styles.itemMain}>
+            <Avatar
+              xlarge
+              rounded
+              source={{ uri: user.avatar }}
+              onPress={() => console.log("Clicked Avatar!")}
+              activeOpacity={0.7}
+              containerStyle={{}} />
+            <Text style={{ fontSize: 22, fontWeight: "bold", paddingVertical: 16 }}>{user.name}</Text>
+          </View> :
+          <View style={styles.itemMain}>
+            <Avatar
+              xlarge
+              rounded
+              icon={{ name: 'account-circle' }}
+              onPress={() => console.log("Clicked Avatar!")}
+              activeOpacity={0.7}
+              containerStyle={{}} />
             < SocialIcon
               onPress={() => this.onLogin()}
               title='Log In With Facebook'
@@ -42,8 +42,8 @@ class Profile extends PureComponent {
               type='facebook'
               style={{ paddingHorizontal: 16, marginVertical: 16 }}
             />
-          }
-        </View>
+          </View>
+        }
         <View style={{
           marginTop: 16,
           borderRadius: 3,
@@ -74,8 +74,9 @@ class Profile extends PureComponent {
             <Text style={styles.itemText}>Version 0.1</Text>
           </TouchableOpacity>
         </View>
-        {currentUser ?
-          <TouchableOpacity style={{ padding: 24, justifyContent: "center", alignItems: "center" }}>
+        {user ?
+          <TouchableOpacity style={{ padding: 24, justifyContent: "center", alignItems: "center" }}
+            onPress={() => this.onLogout()}>
             <Text>Log out</Text>
           </TouchableOpacity> :
           null
@@ -87,22 +88,34 @@ class Profile extends PureComponent {
   onLogin = () => {
     this.props.loginWithFacebook();
   }
+
+  onLogout = () => {
+    this.props.doLogout();
+  }
 }
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.auth.user,
-    accessToken: state.auth.accessToken
+    user: state.auth.user,
+    errorCode: state.auth.errorCode
   }
 }
 
-export default connect(mapStateToProps, {loginWithFacebook})(Profile)
+export default connect(mapStateToProps, { loginWithFacebook, doLogout })(Profile)
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
     padding: 16
+  },
+  itemMain: {
+    paddingVertical: 32,
+    justifyContent: 'center',
+    paddingTop: 60,
+    alignItems: 'center',
+    borderRadius: 3,
+    backgroundColor: "white"
   },
   itemRow: {
     flexDirection: "row",

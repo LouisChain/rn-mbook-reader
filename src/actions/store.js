@@ -27,7 +27,9 @@ export function _fetchStore() {
     dispatch(loading());
     fetchStore()
       .then((response) => {
-        dispatch(success(response.data.data))
+        if (response) {
+          dispatch(success(response.data.data));
+        }
       })
       .catch((error) => {
         dispatch(error(error.code));

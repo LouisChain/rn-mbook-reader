@@ -1,31 +1,77 @@
 import axios from "axios";
+import * as Pref from "../local/pref"
+import Const from "@constants/key"
 
 const defaultPagination = 20;
 const instance = axios.create({
-  baseURL: "http://45.32.99.230:3000",
+  baseURL: "http://192.168.1.7:3000",
   timeout: 60000
 });
 
-export function fetchStore() {
+const refreshToken = (loggedUser) => {
+  if (loggedUser) {
+    return instance.post("/user/token/", {
+      id: loggedUser.id,
+      refreshToken: loggedUser.refreshToken
+    }).then(result => {
+      if (result) {
+        updateloggedUser(result.data);
+      }
+    });
+  }
+}
+
+const grantAnonymous = () => {
+  return instance.post("/user/grantAnonymous/")
+    .then(result => {
+      if (result) {
+        updateloggedUser(result.data);
+      }
+    });
+}
+
+const updateloggedUser = async (values) => {
+  await Pref.set(Const.LOGGED_IN_USER, values);
+}
+
+const fetchStore = async () => {
+  let loggedUser = await Pref.get(Const.LOGGED_IN_USER);
+  if (!loggedUser) {
+    return grantAnonymous()
+      .then(() => Pref.get(Const.LOGGED_IN_USER))
+      .then(anonymous => fetchingStore(anonymous));
+  } else {
+    // Check if token expired
+    let expiresAt = loggedUser.expiresAt;
+    let expired = new Date(expiresAt).getTime();
+    let current = new Date().getTime();
+    if (expired < current) {
+      return refreshToken(loggedUser)
+        .then(() => Pref.get(Const.LOGGED_IN_USER))
+        .then(updatedUser => fetchingStore(updatedUser));
+    } else {
+      return fetchingStore(loggedUser);
+    }
+  }
+}
+
+const fetchingStore = (loggedUser) => {
   return instance.get("/store/", {
+    headers: {
+      Authorization: "Bearer " + loggedUser.token
+    },
     params: {
       limit: defaultPagination
     }
+  })
+}
+
+const fbLogin = (fbToken, anonymous) => {
+  return instance.post("/user/fbLogin/", {
+    fbToken,
+    anonymous
   });
 }
 
-export function getGlobalData() {
-  return instance.get("/v2/global/");
-}
+export { fetchStore, fbLogin }
 
-export function getHistoricalData(period, symbol) {
-  let url = "/history{period}/{symbol}";
-  url = url.replace("{period}", period == null ? "" : "/" + period);
-  url = url.replace("{symbol}", symbol);
-  return axios
-    .create({
-      baseURL: "http://coincap.io",
-      timeout: 30000
-    })
-    .get(url);
-}
