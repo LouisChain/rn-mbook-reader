@@ -5,7 +5,7 @@ const initialState = {
   audiobooks: [],
   categories: [],
   isLoading: true,
-  errorCode: null
+  errorMessage: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-        errorCode: null
+        errorMessage: null
       }
     case Const.STORE_SUCCESS:
       return {
@@ -22,13 +22,14 @@ const reducer = (state = initialState, action) => {
         ebooks: action.epub,
         audiobooks: action.audio,
         categories: action.categories,
-        isLoading: false
+        isLoading: false, 
+        errorMessage: null
       }
     case Const.STORE_ERROR:
       return {
         ...state,
         isLoading: false,
-        errorCode: action.errorCode
+        errorMessage: action.errorMessage
       }
     default:
       return state;

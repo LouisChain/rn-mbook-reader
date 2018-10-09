@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { connect } from "react-redux";
 import { loginWithFacebook, doLogout } from "@actions/auth";
 import Icon from "@components/Icon";
@@ -90,7 +90,15 @@ class Profile extends PureComponent {
   }
 
   onLogout = () => {
-    this.props.doLogout();
+    Alert.alert(
+      'Confirm log out',
+      'Are you sure to log out?',
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'Confirm', onPress: () => this.props.doLogout() },
+      ],
+      { cancelable: false }
+    )
   }
 }
 

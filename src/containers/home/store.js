@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View, SectionList } from 'react-native';
+import { Text, SectionList } from 'react-native';
 import { connect } from "react-redux"
 import { _fetchStore } from "@actions/store"
 import LoadingView from "@components/LoadingView";
+import ErrorView from "@components/ErrorView";
 import PropTypes from "prop-types";
 import HorizontalBookList from "@components/HBookList";
 import CategoryTextGridView from "@components/CategoryTextGridView";
@@ -19,6 +20,9 @@ class Store extends PureComponent {
   render() {
     if (this.props.isLoading) {
       return <LoadingView />
+    }
+    if (this.props.errorMessage) {
+      return <ErrorView errorMessage={this.props.errorMessage} onPress={() => this.onRefresh()} />
     }
     let { theme } = this.context;
     return (
@@ -49,6 +53,10 @@ class Store extends PureComponent {
     <CategoryTextGridView data={item.item} numColumns={2} />
   )
 
+  onRefresh = () => {
+    this.props._fetchStore();
+  }
+
 }
 
 function mapStateToProps(state) {
@@ -57,7 +65,7 @@ function mapStateToProps(state) {
     audiobooks: state.store.audiobooks,
     categories: state.store.categories,
     isLoading: state.store.isLoading,
-    errorCode: state.store.errorCode
+    errorMessage: state.store.errorMessage
   }
 }
 

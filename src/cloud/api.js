@@ -4,7 +4,7 @@ import Const from "@constants/key"
 
 const defaultPagination = 20;
 const instance = axios.create({
-  baseURL: "http://192.168.1.7:3000",
+  baseURL: "http://192.168.0.50:3000",
   timeout: 60000
 });
 
