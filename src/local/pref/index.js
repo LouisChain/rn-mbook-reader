@@ -1,9 +1,12 @@
 import { AsyncStorage } from "react-native";
-// Need secure by encrypt data value
+import Keys from "@constants/key";
+import { AesCtr } from "@utils/crypto/Aes-Ctr";
 
 const set = (key, values) => {
   try {
-    return AsyncStorage.setItem(key, JSON.stringify(values));
+    let str = JSON.stringify(values);
+    let cypherText = AesCtr.encrypt(str, Keys.CYPHER_PASSWORD, Keys.CYPHER_BITS);
+    return AsyncStorage.setItem(key, cypherText);
   } catch (error) {
     console.error('AsyncStorage#setItem error: ' + error.message);
   }
@@ -11,10 +14,12 @@ const set = (key, values) => {
 
 const get = key => {
   return AsyncStorage.getItem(key)
-    .then((result) => {
-      if (result) {
+    .then((cypherText) => {
+      let result = null;
+      if (cypherText) {
         try {
-          result = JSON.parse(result);
+          let plainText = AesCtr.decrypt(cypherText, Keys.CYPHER_PASSWORD, Keys.CYPHER_BITS);
+          result = JSON.parse(plainText);
         } catch (e) {
           console.error('AsyncStorage#getItem error deserializing JSON for key: ' + key, e.message);
         }
