@@ -5,7 +5,7 @@ import { Avatar } from "react-native-elements";
 
 export default class ErrorView extends PureComponent {
   static contextTypes = {
-    theme: PropTypes.object,
+    appTheme: PropTypes.object,
     resource: PropTypes.object
   }
 
@@ -15,10 +15,10 @@ export default class ErrorView extends PureComponent {
   }
 
   render() {
-    const { theme } = this.context;
+    const { appTheme } = this.context;
     return (
       <View
-        style={[styles.centerScreen, { backgroundColor: theme.palette.background }]}>
+        style={[styles.centerScreen, { backgroundColor: appTheme.palette.background }]}>
         <Text style={{ justifyContent: "center" }}>{this.props.errorMessage}</Text>
         <Avatar
           small

@@ -61,7 +61,8 @@ const RootStack = createStackNavigator(
           />
         )
       })
-    }
+    },
+    Book: routeConfigMap.book
   },
   {
     navigationOptions: {
@@ -87,7 +88,7 @@ class RootNavigator extends React.Component {
 class RootContainer extends Component {
 
   static childContextTypes = {
-    theme: PropTypes.object,
+    appTheme: PropTypes.object,
     resource: PropTypes.object
   }
 
@@ -96,7 +97,7 @@ class RootContainer extends Component {
 
   getChildContext() {
     return {
-      theme: this._theme,
+      appTheme: this._theme,
       resource: this._resource
     }
   }

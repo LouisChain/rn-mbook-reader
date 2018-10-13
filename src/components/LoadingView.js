@@ -5,17 +5,16 @@ import PropTypes from "prop-types"
 export default class LoadingView extends PureComponent {
 
   static contextTypes = {
-    theme: PropTypes.object,
-    resource: PropTypes.object
+    appTheme: PropTypes.object
   }
 
   render() {
-    const { theme } = this.context;
+    const { appTheme } = this.context;
     return (
       <ActivityIndicator
-        style={[styles.centerScreen, { backgroundColor: theme.palette.background }]}
+        style={[styles.centerScreen, { backgroundColor: appTheme.palette.background }]}
         size="large"
-        color={theme.bottomTab.active}
+        color={appTheme.bottomTab.active}
       />
     )
   }

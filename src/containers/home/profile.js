@@ -8,12 +8,13 @@ import PropTypes from "prop-types";
 
 class Profile extends PureComponent {
   static contextTypes = {
-    theme: PropTypes.object
+    appTheme: PropTypes.object
   };
 
   render() {
     let user = this.props.user;
-    let { theme } = this.context;
+    let { appTheme } = this.context;
+    let iconColor = appTheme.bottomTab.inactive;
     return (
       <ScrollView style={styles.container}>
         {user ?
@@ -50,27 +51,27 @@ class Profile extends PureComponent {
           backgroundColor: "white"
         }}>
           <TouchableOpacity style={styles.itemRow}>
-            <Icon set="MaterialIcons" name="favorite" size={24} color={theme.bottomTab.inactive} />
+            <Icon set="MaterialIcons" name="favorite" size={24} color={iconColor} />
             <Text style={styles.itemText}>I love this app</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemRow}>
-            <Icon set="MaterialIcons" name="report" size={24} color={theme.bottomTab.inactive} />
+            <Icon set="MaterialIcons" name="report" size={24} color={iconColor} />
             <Text style={styles.itemText}>I need improve this app</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemRow}>
-            <Icon set="MaterialIcons" name="settings" size={24} color={theme.bottomTab.inactive} />
+            <Icon set="MaterialIcons" name="settings" size={24} color={iconColor} />
             <Text style={styles.itemText}>Settings</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemRow}>
-            <Icon set="MaterialIcons" name="help" size={24} color={theme.bottomTab.inactive} />
+            <Icon set="MaterialIcons" name="help" size={24} color={iconColor} />
             <Text style={styles.itemText}>Donate us</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemRow}>
-            <Icon set="MaterialIcons" name="hearing" size={24} color={theme.bottomTab.inactive} />
+            <Icon set="MaterialIcons" name="hearing" size={24} color={iconColor} />
             <Text style={styles.itemText}>About us</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemRow}>
-            <Icon set="MaterialIcons" name="hearing" size={24} color={theme.bottomTab.inactive} />
+            <Icon set="MaterialIcons" name="hearing" size={24} color={iconColor} />
             <Text style={styles.itemText}>Version 0.1</Text>
           </TouchableOpacity>
         </View>

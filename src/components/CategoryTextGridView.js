@@ -9,7 +9,7 @@ export default class App extends PureComponent {
   }
 
   renderItem = ({ item, index }) => {
-    return <TouchableOpacity style={styles.container}
+    return <TouchableOpacity style={[styles.container, index === 0 || 1 ? { marginTop: 0 } : null]}
       onPress={() => this.onPressCategory(item)}>
       <Text style={styles.text} numberOfLines={1}>{item.name}</Text>
     </TouchableOpacity>
@@ -35,7 +35,7 @@ export default class App extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
+    margin: 4,
     minWidth: 120,
     maxWidth: 300,
     height: 48,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "black",
-    fontSize: 16,
+    fontSize: 14,
     padding: 8
   }
 });

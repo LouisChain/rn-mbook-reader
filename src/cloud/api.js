@@ -4,14 +4,14 @@ import Const from "@constants/key"
 
 const defaultPagination = 20;
 const instance = axios.create({
-  baseURL: "http://192.168.0.50:3000",
+  baseURL: "http://localhost:3000",
   timeout: 60000
 });
 
 const refreshToken = (loggedUser) => {
   if (loggedUser) {
     return instance.post("/user/token/", {
-      id: loggedUser.id,
+      id: loggedUser.id,// body params
       refreshToken: loggedUser.refreshToken
     }).then(result => {
       if (result) {
@@ -60,7 +60,7 @@ const fetchingStore = (loggedUser) => {
     headers: {
       Authorization: "Bearer " + loggedUser.token
     },
-    params: {
+    params: {// query param
       limit: defaultPagination
     }
   })
@@ -73,5 +73,9 @@ const fbLogin = (fbToken, anonymous) => {
   });
 }
 
-export { fetchStore, fbLogin }
+const getCategoryById = (id) => {
+  return instance.get("/category/" + id);
+}
+
+export { fetchStore, fbLogin, getCategoryById }
 

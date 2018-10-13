@@ -10,7 +10,7 @@ import CategoryTextGridView from "@components/CategoryTextGridView";
 
 class Store extends PureComponent {
   static contextTypes = {
-    theme: PropTypes.object
+    appTheme: PropTypes.object
   };
 
   componentDidMount() {
@@ -24,9 +24,9 @@ class Store extends PureComponent {
     if (this.props.errorMessage) {
       return <ErrorView errorMessage={this.props.errorMessage} onPress={() => this.onRefresh()} />
     }
-    let { theme } = this.context;
+    let { appTheme } = this.context;
     return (
-      <SectionList style={{ flex: 1, backgroundColor: theme.palette.background, padding: 16 }}
+      <SectionList style={{ flex: 1, backgroundColor: appTheme.palette.background, padding: 16 }}
         keyExtractor={(item, index) => item + index}
         renderSectionHeader={({ section: { title } }) => (
           this.renderSectionHeader(title)
@@ -42,11 +42,11 @@ class Store extends PureComponent {
   }
 
   renderSectionHeader = (title) => {
-    return <Text style={{ color: "black", fontWeight: 'bold', fontSize: 16, marginVertical: 16 }}>{title}</Text>
+    return <Text style={{ color: "black", fontWeight: 'bold', fontSize: 18, marginTop: 16, marginBottom: 8 }}>{title}</Text>
   }
 
   _renderItem(item, index, section) {
-    return <HorizontalBookList data={item.item} />;
+    return <HorizontalBookList data={item.item} navigation={this.props.navigation} />;
   }
 
   renderCategories = ({ item, index, section: { title, data } }) => (

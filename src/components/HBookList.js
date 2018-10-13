@@ -6,7 +6,8 @@ import HBookItem from "./HBookItem";
 const listItemHeight = 150;
 export default class HBookList extends PureComponent {
   static propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    navigation: PropTypes.object
   }
 
   render() {
@@ -23,15 +24,15 @@ export default class HBookList extends PureComponent {
     )
   }
 
-  handleBookItemPress = item => {
-    //
+  onBookItemPress = item => {
+    this.props.navigation.navigate("Book", { book: item });
   };
 
   renderItem = (rowData) => {
     return (
       <HBookItem
         book={rowData.item}
-        onPress={() => this.handleBookItemPress(rowData.item)}
+        onPress={() => this.onBookItemPress(rowData.item)}
       />
     );
   };
