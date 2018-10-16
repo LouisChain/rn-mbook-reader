@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text, SectionList } from 'react-native';
+import { Text, SectionList, View } from 'react-native';
 import { connect } from "react-redux"
 import { _fetchStore } from "@actions/store"
 import LoadingView from "@components/LoadingView";
@@ -7,6 +7,8 @@ import ErrorView from "@components/ErrorView";
 import PropTypes from "prop-types";
 import HorizontalBookList from "@components/HBookList";
 import CategoryTextGridView from "@components/CategoryTextGridView";
+import SearchBar from "@components/SearchBar"
+import { Header } from "native-base"
 
 class Store extends PureComponent {
   static contextTypes = {
@@ -19,30 +21,37 @@ class Store extends PureComponent {
 
   render() {
     if (this.props.isLoading) {
-      return <LoadingView />
+      return <LoadingView size="small" />
     }
     if (this.props.errorMessage) {
       return <ErrorView errorMessage={this.props.errorMessage} onPress={() => this.onRefresh()} />
     }
     let { appTheme } = this.context;
     return (
-      <SectionList style={{ flex: 1, backgroundColor: appTheme.palette.background, padding: 16 }}
-        keyExtractor={(item, index) => item + index}
-        renderSectionHeader={({ section: { title } }) => (
-          this.renderSectionHeader(title)
-        )}
-        renderItem={({ item, index, section }) => (this._renderItem(item, index, section))}
-        sections={[
-          { title: 'E-books', data: [{ item: this.props.ebooks }] },
-          { title: 'Audio Books', data: [{ item: this.props.audiobooks }] },
-          { title: 'Categories', data: [{ item: this.props.categories }], renderItem: this.renderCategories },
-        ]}
-      />
+      <View style={{ flex: 1 }}>
+        <Header style={{ backgroundColor: appTheme.palette.background }}>
+          <SearchBar onPress={() => this.props.navigation.navigate("Search")} />
+        </Header>
+        <SectionList stickySectionHeadersEnabled={false}
+          style={{ flex: 1, backgroundColor: appTheme.palette.background, padding: 16 }}
+          keyExtractor={(item, index) => item + index}
+          renderSectionHeader={({ section: { title } }) => (
+            this.renderSectionHeader(title)
+          )}
+          renderItem={({ item, index, section }) => (this._renderItem(item, index, section))}
+          sections={[
+            { title: 'E-books', data: [{ item: this.props.ebooks }] },
+            { title: 'Audio Books', data: [{ item: this.props.audiobooks }] },
+            { title: 'Categories', data: [{ item: this.props.categories }], renderItem: this.renderCategories },
+          ]}
+        />
+      </View>
     );
   }
 
   renderSectionHeader = (title) => {
-    return <Text style={{ color: "black", fontWeight: 'bold', fontSize: 18, marginTop: 16, marginBottom: 8 }}>{title}</Text>
+    let top = title === 'E-books' ? { marginTop: 0 } : { marginTop: 16 };
+    return <Text style={[{ color: "black", fontWeight: 'bold', fontSize: 18, marginBottom: 8 }, top]}>{title}</Text>
   }
 
   _renderItem(item, index, section) {
@@ -50,7 +59,7 @@ class Store extends PureComponent {
   }
 
   renderCategories = ({ item, index, section: { title, data } }) => (
-    <CategoryTextGridView data={item.item} numColumns={2} />
+    <CategoryTextGridView data={item.item} numColumns={2} navigation={this.props.navigation} />
   )
 
   onRefresh = () => {

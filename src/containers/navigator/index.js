@@ -62,7 +62,8 @@ const RootStack = createStackNavigator(
         )
       })
     },
-    Book: routeConfigMap.book
+    Book: routeConfigMap.book,
+    Search: routeConfigMap.search
   },
   {
     navigationOptions: {

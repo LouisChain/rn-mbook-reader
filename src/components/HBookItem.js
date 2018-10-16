@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap"
   },
   author: {
+    marginTop: 4,
     color: "gray",
     fontSize: 10,
     flexWrap: "wrap"

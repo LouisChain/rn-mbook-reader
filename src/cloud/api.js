@@ -34,12 +34,11 @@ const updateloggedUser = async (values) => {
   await Pref.set(Const.LOGGED_IN_USER, values);
 }
 
-const fetchStore = async () => {
+const getUser = async () => {
   let loggedUser = await Pref.get(Const.LOGGED_IN_USER);
   if (!loggedUser) {
     return grantAnonymous()
       .then(() => Pref.get(Const.LOGGED_IN_USER))
-      .then(anonymous => fetchingStore(anonymous));
   } else {
     // Check if token expired
     let expiresAt = loggedUser.expiresAt;
@@ -47,23 +46,25 @@ const fetchStore = async () => {
     let current = new Date().getTime();
     if (expired < current) {
       return refreshToken(loggedUser)
-        .then(() => Pref.get(Const.LOGGED_IN_USER))
-        .then(updatedUser => fetchingStore(updatedUser));
+        .then(() => Pref.get(Const.LOGGED_IN_USER));
     } else {
-      return fetchingStore(loggedUser);
+      return Promise.resolve(loggedUser);
     }
   }
 }
 
-const fetchingStore = (loggedUser) => {
-  return instance.get("/store/", {
-    headers: {
-      Authorization: "Bearer " + loggedUser.token
-    },
-    params: {// query param
-      limit: defaultPagination
-    }
-  })
+const fetchStore = async () => {
+  return getUser()
+    .then(loggedUser =>
+      instance.get("/store/", {
+        headers: {
+          Authorization: "Bearer " + loggedUser.token
+        },
+        params: {// query param
+          limit: defaultPagination
+        }
+      })
+    )
 }
 
 const fbLogin = (fbToken, anonymous) => {
@@ -77,5 +78,36 @@ const getCategoryById = (id) => {
   return instance.get("/category/" + id);
 }
 
-export { fetchStore, fbLogin, getCategoryById }
+const search = async keyword => {
+  return getUser()
+    .then(loggedUser =>
+      instance.get("/store/search/", {
+        headers: {
+          Authorization: "Bearer " + loggedUser.token
+        },
+        params: {// query param
+          keyword,
+          limit: defaultPagination
+        }
+      })
+    )
+}
+
+const getByCategory = (category) => {
+  return getUser()
+    .then(loggedUser =>
+      instance.get("/store/category", {
+        headers: {
+          Authorization: "Bearer " + loggedUser.token
+        },
+        params: {
+          category,
+          offset: 0,
+          limit: defaultPagination
+        }
+      })
+    )
+}
+
+export { fetchStore, fbLogin, getCategoryById, search, getByCategory }
 

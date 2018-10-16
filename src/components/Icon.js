@@ -19,7 +19,7 @@ import PropTypes from "prop-types"
 
 export default class Icon extends React.PureComponent {
 
-  static DEFAULT_ICON_SET = MaterialIcons//m3IconName;
+  static DEFAULT_ICON_SET = "MaterialIcons"//m3IconName;
 
   static ICON_SETS = { Entypo, EvilIcons, Feather, FontAwesome, Foundation, Ionicons, MaterialIcons, MaterialCommunityIcons, Octicons, Zocial, SimpleLineIcons };
 
@@ -46,13 +46,13 @@ export default class Icon extends React.PureComponent {
   }
 
   static contextTypes = {
-    theme: PropTypes.object
+    appTheme: PropTypes.object
   }
 
   render() {
-    const { theme } = this.context;
+    const { appTheme } = this.context;
     const color = this._getColor();
-    const size = this.props.size || theme.icon.size
+    const size = this.props.size || appTheme.defaultTheme.icon.size
     const IconView = Icon.ICON_SETS[this.props.set || Icon.DEFAULT_ICON_SET]
     return (
       <IconView style={this.props.style}
@@ -63,8 +63,7 @@ export default class Icon extends React.PureComponent {
   }
 
   _getColor = () => {
-    const { theme } = this.context;
-    const state = this.props.focus ? 'focused' : (this.props.active ? 'active' : 'inactive')
-    return this.props.color || theme.iconColor[state][this.props.palette]
+    const { appTheme } = this.context;
+    return this.props.color || appTheme.defaultTheme.iconColor.active.primary;
   }
 }

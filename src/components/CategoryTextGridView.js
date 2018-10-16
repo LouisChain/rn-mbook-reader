@@ -5,18 +5,19 @@ import PropTypes from "prop-types";
 export default class App extends PureComponent {
   static propTypes = {
     data: PropTypes.array,
-    numColumns: PropTypes.number
+    numColumns: PropTypes.number,
+    navigation: PropTypes.object
   }
 
   renderItem = ({ item, index }) => {
-    return <TouchableOpacity style={[styles.container, index === 0 || 1 ? { marginTop: 0 } : null]}
+    return <TouchableOpacity style={[styles.container, (index === 0 || index === 1) ? { marginTop: 0 } : { marginTop: 4 }]}
       onPress={() => this.onPressCategory(item)}>
       <Text style={styles.text} numberOfLines={1}>{item.name}</Text>
     </TouchableOpacity>
   }
 
   onPressCategory = item => {
-    // Handle Press on category
+    this.props.navigation.navigate("Search", { category: item })
   }
 
   render() {

@@ -25,7 +25,8 @@ const Theme = {
     text: "#FFFFFF"
   },
   palette: {
-    background: '#F5FCFF',
+    // background: '#F5FCFF',
+    background: '#FFFFFF',
     backgroundDark: '#DC8B0E',
     backgroundLight: '#F6C16F'
   }

@@ -13,17 +13,22 @@ import Tags from "@components/Tags"
 import * as StringUtils from "@utils/string"
 
 class BookDetail extends PureComponent {
+  static contextTypes = {
+    appTheme: PropTypes.object
+  };
+
   componentDidMount() {
     this.props.getCategory(this.props.navigation.state.params.book.category);
   }
 
   render() {
+    let { appTheme } = this.context;
     let book = this.props.navigation.state.params.book;
     let { category, description, title, tag, author } = book;
     // description = StringUtils.removeMultiBlankLines(description);
     return (
       <Container>
-        <Header>
+        <Header style={{ backgroundColor: appTheme.palette.background }}>
           <Left>
             <Button transparent>
               <Icon name='arrow-back' />
@@ -53,8 +58,8 @@ class BookDetail extends PureComponent {
               <View style={{ flex: 1 }}>
                 <Text style={styles.title}>Category</Text>
                 <Button onPress={() => this.onCategoryPress(category)} light full style={{ marginTop: 8 }} iconRight >
-                  <Text>{this.props.categoryName}</Text>
-                  <Icon name='arrow-forward' />
+                  <Text style={{ color: 'gray' }}>{this.props.categoryName}</Text>
+                  <Icon name='arrow-forward' style={{ position: 'absolute', right: 0 }} color='gray' />
                 </Button>
               </View>
             </ListItem>
@@ -94,6 +99,11 @@ class BookDetail extends PureComponent {
     //   text: category,
     //   buttonText: 'Okay'
     // })
+    this.props.navigation.navigate("Search", {
+      category: {
+        _id: category
+      }
+    })
   }
 
   onTagPress = (value) => {

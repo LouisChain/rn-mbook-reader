@@ -9,7 +9,7 @@ import storage from "redux-persist/lib/storage";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ['nav']
+  blacklist: ['nav', 'search']
 };
 const persistedReducer = persistReducer(persistConfig, reducer);
 const middlewares = [thunk, navMiddleWare];

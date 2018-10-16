@@ -3,9 +3,12 @@ import { StyleSheet, ActivityIndicator } from 'react-native'
 import PropTypes from "prop-types"
 
 export default class LoadingView extends PureComponent {
-
   static contextTypes = {
     appTheme: PropTypes.object
+  }
+
+  static propTypes = {
+    size: PropTypes.string.isRequired
   }
 
   render() {
@@ -13,7 +16,7 @@ export default class LoadingView extends PureComponent {
     return (
       <ActivityIndicator
         style={[styles.centerScreen, { backgroundColor: appTheme.palette.background }]}
-        size="large"
+        size={this.props.size}
         color={appTheme.bottomTab.active}
       />
     )

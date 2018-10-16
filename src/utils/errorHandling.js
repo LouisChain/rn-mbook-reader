@@ -5,6 +5,8 @@ const getErrorMessage = (error) => {
     errorMessage = "Something went wrong, please trying to refresh."
   } else if (message.includes("network error")) {
     errorMessage = "No internet connnection."
+  } else {
+    errorMessage = "Unknown error"
   }
   return errorMessage;
 }

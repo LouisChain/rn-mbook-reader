@@ -39,14 +39,16 @@ const styles = {
     flexDirection: "row"
   },
   info: {
-    marginHorizontal: 18,
-    flexDirection: 'column'
+    paddingHorizontal: 16,
+    flexDirection: 'column',
+    flex: 1
   },
   cover: {
     width: w,
     height: h
   },
   title: {
+    flexDirection: 'row',
     color: "black",
     fontWeight: 'bold',
     fontSize: 18,
