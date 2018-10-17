@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert } from 'rea
 import { connect } from "react-redux";
 import { loginWithFacebook, doLogout } from "@actions/auth";
 import Icon from "@components/Icon";
-import { Avatar, SocialIcon } from "react-native-elements";
+import { Avatar, SocialIcon, Divider } from "react-native-elements";
+import { Button } from 'native-base'
 import PropTypes from "prop-types";
 
 class Profile extends PureComponent {
@@ -26,7 +27,27 @@ class Profile extends PureComponent {
               onPress={() => console.log("Clicked Avatar!")}
               activeOpacity={0.7}
               containerStyle={{}} />
-            <Text style={{ fontSize: 22, fontWeight: "bold", paddingVertical: 16 }}>{user.name}</Text>
+            <Text style={{ fontSize: 22, fontWeight: "bold", paddingTop: 16 }}>{user.name}</Text>
+            <View style={{ flexDirection: 'row', flex: 1 }}>
+              <Button transparent >
+                <Text style={styles.itemCount}>Đã đọc: </Text>
+                <Text style={styles.itemCount2}>123</Text>
+              </Button>
+              <View
+                style={{
+                  width: 2,
+                  borderLeftWidth: 1,
+                  borderLeftColor: 'gray',
+                  marginHorizontal: 4,
+                  height: 10,
+                  alignSelf: 'center'
+                }}
+              />
+              <Button transparent>
+                <Text style={styles.itemCount}>Đã nghe: </Text>
+                <Text style={styles.itemCount2}>98</Text>
+              </Button>
+            </View>
           </View> :
           <View style={styles.itemMain}>
             <Avatar
@@ -71,14 +92,14 @@ class Profile extends PureComponent {
             <Text style={styles.itemText}>About us</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemRow}>
-            <Icon set="MaterialIcons" name="hearing" size={24} color={iconColor} />
+            <Icon set="MaterialIcons" name="star" size={24} color={iconColor} />
             <Text style={styles.itemText}>Version 0.1</Text>
           </TouchableOpacity>
         </View>
         {user ?
           <TouchableOpacity style={{ padding: 24, justifyContent: "center", alignItems: "center" }}
             onPress={() => this.onLogout()}>
-            <Text>Log out</Text>
+            <Text style={styles.logout}>Log out</Text>
           </TouchableOpacity> :
           null
         }
@@ -115,24 +136,34 @@ export default connect(mapStateToProps, { loginWithFacebook, doLogout })(Profile
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FFF',
     padding: 16
   },
   itemMain: {
-    paddingVertical: 32,
     justifyContent: 'center',
     paddingTop: 60,
     alignItems: 'center',
-    borderRadius: 3,
-    backgroundColor: "white"
   },
   itemRow: {
     flexDirection: "row",
     alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 16
+    paddingVertical: 8
   },
   itemText: {
-    paddingHorizontal: 16
+    fontSize: 16,
+    paddingLeft: 16
+  },
+  itemCount: {
+    color: 'gray',
+    fontSize: 12
+  },
+  itemCount2: {
+    color: 'black',
+    fontSize: 14,
+    fontWeight: 'bold'
+  },
+  logout: {
+    fontSize: 18,
+    color: 'red'
   }
 });

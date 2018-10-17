@@ -19,7 +19,7 @@ export default class ErrorView extends PureComponent {
     return (
       <View
         style={[styles.centerScreen, { backgroundColor: appTheme.palette.background }]}>
-        <Text style={{ justifyContent: "center" }}>{this.props.errorMessage}</Text>
+        <Text style={{ justifyContent: "center", textAlign: 'center' }}>{this.props.errorMessage}</Text>
         <Avatar
           small
           rounded
