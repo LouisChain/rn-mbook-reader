@@ -5,6 +5,7 @@ import store from "@reducers/store"
 import auth from "@reducers/auth"
 import book from "@reducers/book"
 import search from "@reducers/search"
+import audioReader from "@reducers/audioReader"
 
 const reducer = combineReducers({
   nav,
@@ -12,7 +13,8 @@ const reducer = combineReducers({
   store,
   auth,
   book,
-  search
+  search,
+  audioReader
 });
 
 export default reducer;

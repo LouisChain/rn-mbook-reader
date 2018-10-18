@@ -36,10 +36,10 @@ const BottomTabStack = createBottomTabNavigator(routeConfigMap.home, {
   }),
   initialRouteName: "library",
   tabBarOptions: {
-    activeTintColor: theme.bottomTab.active,
-    inactiveTintColor: theme.bottomTab.inactive,
+    activeTintColor: theme.color.activeColor,
+    inactiveTintColor: theme.color.inactiveColor,
     style: {
-      backgroundColor: "white"
+      backgroundColor: theme.palette.background
     }
   },
   animationEnabled: true,
@@ -63,14 +63,15 @@ const RootStack = createStackNavigator(
       })
     },
     Book: routeConfigMap.book,
-    Search: routeConfigMap.search
+    Search: routeConfigMap.search,
+    AudioReader: routeConfigMap.audioReader
   },
   {
     navigationOptions: {
       headerStyle: {
         backgroundColor: theme.palette.background
       },
-      headerTintColor: "white",
+      headerTintColor: theme.palette.background,
       headerTitleStyle: {
         fontSize: 18,
         fontWeight: "normal"

@@ -15,7 +15,7 @@ class Profile extends PureComponent {
   render() {
     let user = this.props.user;
     let { appTheme } = this.context;
-    let iconColor = appTheme.bottomTab.inactive;
+    let iconColor = appTheme.color.inactiveColor;
     return (
       <ScrollView style={styles.container}>
         {user ?

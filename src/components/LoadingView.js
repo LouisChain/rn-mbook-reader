@@ -17,7 +17,7 @@ export default class LoadingView extends PureComponent {
       <ActivityIndicator
         style={[styles.centerScreen, { backgroundColor: appTheme.palette.background }]}
         size={this.props.size}
-        color={appTheme.bottomTab.active}
+        color={appTheme.color.activeColor}
       />
     )
   }

@@ -52,7 +52,7 @@ export default class Icon extends React.PureComponent {
   render() {
     const { appTheme } = this.context;
     const color = this._getColor();
-    const size = this.props.size || appTheme.defaultTheme.icon.size
+    const size = this.props.size || appTheme.icon.size
     const IconView = Icon.ICON_SETS[this.props.set || Icon.DEFAULT_ICON_SET]
     return (
       <IconView style={this.props.style}
@@ -64,6 +64,6 @@ export default class Icon extends React.PureComponent {
 
   _getColor = () => {
     const { appTheme } = this.context;
-    return this.props.color || appTheme.defaultTheme.iconColor.active.primary;
+    return this.props.color || appTheme.icon.normal;
   }
 }

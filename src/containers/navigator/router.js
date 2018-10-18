@@ -3,6 +3,7 @@ import StoreContainer from "@containers/home/store";
 import ProfileContainer from "@containers/home/profile";
 import BookContainer from "@containers/book"
 import SearchContainer from "@containers/search"
+import AudioReaderContainer from "@containers/reader/audioReader"
 
 export default {
   home: {
@@ -25,6 +26,13 @@ export default {
   },
   search: {
     screen: SearchContainer,
+    navigationOptions: ({ navigation }) => ({
+      title: "",
+      header: null
+    })
+  },
+  audioReader: {
+    screen: AudioReaderContainer,
     navigationOptions: ({ navigation }) => ({
       title: "",
       header: null

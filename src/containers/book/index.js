@@ -88,10 +88,12 @@ class BookDetail extends PureComponent {
   }
 
   onOpenBook = () => {
-    // Toast.show({
-    //   text: "opened",
-    //   buttonText: 'Okay'
-    // })
+    let book = this.props.navigation.state.params.book;
+    switch (book.format) {
+      case 'audio':
+        this.props.navigation.navigate("AudioReader", { book })
+        break;
+    }
   }
 
   onCategoryPress = (category) => {

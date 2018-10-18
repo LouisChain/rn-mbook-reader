@@ -50,7 +50,7 @@ class Search extends PureComponent {
               returnKeyType='search'
               autoFocus={true}
               ref={c => { this.searchBox = c }}
-              selectionColor={appTheme.bottomTab.active}
+              selectionColor={appTheme.color.activeColor}
               onSubmitEditing={this.searchSubmit}
               autoCorrect={false}
               clearButtonMode="while-editing"
