@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react"
 import {
-  View, Text, Container, List, ListItem, Content
+  View, Text, Container, List, ListItem, Content, Body
 } from 'native-base';
 import PropTypes from "prop-types"
 import { Divider } from "react-native-elements";
+import IconStateDownload from "./IconStateDownload"
 
 export default class Chapter extends PureComponent {
   static contextTypes = {
@@ -11,14 +12,17 @@ export default class Chapter extends PureComponent {
   }
 
   static propTypes = {
+    id: PropTypes.string,
     title: PropTypes.string,
-    chapters: PropTypes.array,
-    navigator: PropTypes.object
+    chapters: PropTypes.array
+  }
+
+  onChapterSelected = (item) => {
   }
 
   render() {
     let { appTheme } = this.context;
-    let { title, chapters } = this.props;
+    let { id, title, chapters } = this.props;
     return (
       <Container>
         <View style={{ padding: 16, paddingTop: 48 }}>
@@ -29,8 +33,12 @@ export default class Chapter extends PureComponent {
         <Content>
           <List dataArray={this.props.chapters}
             renderRow={(item) =>
-              <ListItem>
-                <Text>{item.title}</Text>
+              <ListItem
+                onPress={() => this.onChapterSelected(item)}>
+                <Body>
+                  <Text numberOfLines={3}>{item.title}</Text>
+                </Body>
+                <IconStateDownload url={item.media} id={id} />
               </ListItem>
             }>
           </List>

@@ -27,7 +27,7 @@ class AudioReader extends PureComponent {
     return (
       <Drawer
         ref={(ref) => { this.drawer = ref; }}
-        content={<Chapter navigator={this.props.navigator} title={book.title} chapters={book.mbookLink} />}
+        content={<Chapter id={book._id} title={book.title} chapters={book.mbookLink} />}
         onClose={() => this.closeDrawer()} >
         <Container>
           <Header style={{ backgroundColor: appTheme.palette.background }}>

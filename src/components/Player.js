@@ -16,6 +16,18 @@ export default class Player extends PureComponent {
     book: PropTypes.object
   }
 
+  onPlayPrevious = () => {
+
+  }
+
+  onPlay = () => {
+    
+  }
+
+  onPlayNext = () => {
+
+  }
+
   render() {
     let { appTheme } = this.context;
     let { title, author, cover, coverLink, mbookLink } = this.props.book;
@@ -28,7 +40,6 @@ export default class Player extends PureComponent {
             xlarge
             rounded
             source={{ uri: coverLink || cover }}
-            onPress={() => console.log("Clicked Avatar!")}
             activeOpacity={0.7}
             containerStyle={{ alignSelf: 'center' }} />
           <Slider maximumValue={100} value={20} />
@@ -43,13 +54,19 @@ export default class Player extends PureComponent {
           <Text style={{ textAlign: 'center', color: 'gray', fontSize: 14, marginTop: 8 }}>{mbookLink[2].title}</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 8 }}>
-          <Button transparent>
+          <Button transparent
+            onPress={() => this.onPlayPrevious()}
+          >
             <Icon name='skip-previous' set='MaterialIcons' size={38} />
           </Button>
-          <Button transparent>
+          <Button transparent
+            onPress={() => this.onPlay()}
+          >
             <Icon name='play-arrow' set='MaterialIcons' size={38} />
           </Button>
-          <Button transparent>
+          <Button transparent
+            onPress={() => this.onPlayNext()}
+          >
             <Icon name='skip-next' set='MaterialIcons' size={38} />
           </Button>
         </View>
