@@ -43,11 +43,16 @@ const get = key => {
 }
 
 const getPath = (url, bookId) => {
-  return dirs.DocumentDir + "/" + bookId + "/" + md5(url);
+  return dirs.DocumentDir + "/" + bookId + "/" + md5(url) + ".mp3";
 }
 
 const wasDownloaded = (url, bookId) => {
   return RNFetchBlob.fs.exists(getPath(url, bookId));
+}
+
+const deleteBook = (bookId) => {
+  let base = dirs.DocumentDir + "/" + bookId + "/";
+  RNFetchBlob.fs.unlink(base);
 }
 
 // this is return a Promise
@@ -75,5 +80,5 @@ const download = (url, bookId) => {
   return task;
 }
 
-export { get, put, remove, downloadToCache, download, wasDownloaded }
+export { get, put, remove, downloadToCache, download, wasDownloaded, getPath, deleteBook }
 

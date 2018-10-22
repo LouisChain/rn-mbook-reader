@@ -12,6 +12,8 @@ target 'rn_mbookreader' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
   target 'rn_mbookreaderTests' do
     inherit! :search_paths
     # Pods for testing
