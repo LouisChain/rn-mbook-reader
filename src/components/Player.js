@@ -2,13 +2,14 @@ import React, { PureComponent } from "react"
 import {
   View, Text, Button
 } from 'native-base';
+import { Alert } from "react-native"
 import { Slider, Avatar } from "react-native-elements"
 import PropTypes from "prop-types"
 import Icon from "@components/Icon"
-import Sound from "react-native-sound"
 import AudioTimer from "@components/AudioTimer"
 import * as DownloadManager from "@utils/downloadManager"
 import * as SoundManager from "@utils/soundManager"
+import NotifService from "@utils/NotifService"
 
 export default class Player extends PureComponent {
   static contextTypes = {
@@ -27,6 +28,7 @@ export default class Player extends PureComponent {
       progress: 0,
       currentPlaying: 0
     }
+    this.notif = new NotifService();
   }
 
   componentDidMount() {
@@ -65,6 +67,7 @@ export default class Player extends PureComponent {
                 duration: sound.getDuration(),
                 playing: true
               });
+              this.notif.localNotif();
             })
         } else {
           this.downloadFile(index, url, _id);

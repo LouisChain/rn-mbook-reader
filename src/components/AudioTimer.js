@@ -5,15 +5,14 @@ import { secondToHMS } from "@utils/string"
 import PropTypes from "prop-types"
 import * as SoundManager from "@utils/soundManager"
 
-let timeout;
 export default class AudioTimer extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      timeout: null,
       playAt: 0,
       slideAt: 0
     }
+    this.timeout = null;
   }
 
   static propTypes = {
@@ -35,21 +34,20 @@ export default class AudioTimer extends PureComponent {
     let Sound = SoundManager.CurrentSound;
     if (Sound) {
       Sound.setCurrentTime(slidingTime);
-      this._clearTimeout(timeout);
+      this._clearTimeout(this.timeout);
       this.setState({ playAt: slidingTime, slideAt: value })
     }
   }
 
   _clearTimeout = () => {
-    if (timeout) {
-      clearTimeout(timeout);
+    if (this.timeout) {
+      clearTimeout(this.timeout);
     }
   }
 
   initial = () => {
     this._clearTimeout();
     this.setState({
-      timeout: null,
       playAt: 0,
       slideAt: 0
     })
@@ -60,7 +58,7 @@ export default class AudioTimer extends PureComponent {
     let slideAt = this.state.slideAt;
     let { duration, playing, title } = this.props
     if (playing && playAt < duration) {
-      timeout = setTimeout(() => {
+      this.timeout = setTimeout(() => {
         this.setState({
           playAt: playAt + 1,
           slideAt: (playAt + 1) * 100 / duration
