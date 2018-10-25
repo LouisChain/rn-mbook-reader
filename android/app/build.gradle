@@ -73,10 +73,14 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+        entryFile: "index.js"
+]
+project.ext.vectoricons = [
+        iconFontNames: ['MaterialIcons.ttf', 'EvilIcons.ttf', 'Entypo.ttf', 'Feather.ttf', 'FontAwesome.ttf', 'Foundation.ttf', 'MaterialCommunityIcons.ttf', 'Octicons.ttf', 'Roboto.ttf', 'SimpleLineIcons.ttf', 'Zocial.ttf'] // Name of the font files you want to copy
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -106,6 +110,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        vectorDrawables.useSupportLibrary = true
     }
     splits {
         abi {
@@ -126,7 +131,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -134,19 +139,20 @@ android {
             }
         }
     }
+
 }
 
 dependencies {
-    compile project(':react-native-push-notification')
-    compile project(':react-native-sound')
-    compile project(':react-native-svg')
-    compile project(':rn-fetch-blob')
-    compile project(':react-native-fbsdk')
-    compile project(':react-native-fast-image')
-    compile project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-push-notification')
+    implementation project(':react-native-sound')
+    implementation project(':react-native-svg')
+    implementation project(':rn-fetch-blob')
+    implementation project(':react-native-fbsdk')
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-fast-image')
 }
 
 // Run this once to be able to run the application with BUCK

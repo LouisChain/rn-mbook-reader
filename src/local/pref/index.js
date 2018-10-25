@@ -2,13 +2,13 @@ import { AsyncStorage } from "react-native";
 import Keys from "@constants/key";
 import { AesCtr } from "@utils/crypto/Aes-Ctr";
 
-const set = (key, values) => {
+const set = async (key, values) => {
   try {
     let str = JSON.stringify(values);
     let cypherText = AesCtr.encrypt(str, Keys.CYPHER_PASSWORD, Keys.CYPHER_BITS);
-    return AsyncStorage.setItem(key, cypherText);
+    await AsyncStorage.setItem(key, cypherText);
   } catch (error) {
-    console.error('AsyncStorage#setItem error: ' + error.message);
+    console.error('AsyncStorage#setItem error: ' + error);
   }
 };
 

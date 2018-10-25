@@ -4,7 +4,7 @@ import Const from "@constants/key"
 
 const defaultPagination = 20;
 const instance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://192.168.0.22:3000",
   timeout: 60000
 });
 
@@ -30,8 +30,8 @@ const grantAnonymous = () => {
     });
 }
 
-const updateloggedUser = async (values) => {
-  await Pref.set(Const.LOGGED_IN_USER, values);
+const updateloggedUser = (values) => {
+  Pref.set(Const.LOGGED_IN_USER, values);
 }
 
 const getUser = async () => {
@@ -53,7 +53,7 @@ const getUser = async () => {
   }
 }
 
-const fetchStore = async () => {
+const fetchStore = () => {
   return getUser()
     .then(loggedUser =>
       instance.get("/store/", {
@@ -78,7 +78,7 @@ const getCategoryById = (id) => {
   return instance.get("/category/" + id);
 }
 
-const search = async keyword => {
+const search = keyword => {
   return getUser()
     .then(loggedUser =>
       instance.get("/store/search/", {
