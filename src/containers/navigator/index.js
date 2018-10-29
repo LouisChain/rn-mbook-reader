@@ -10,12 +10,13 @@ import {
   createReactNavigationReduxMiddleware
 } from "react-navigation-redux-helpers";
 import PropTypes from "prop-types";
-import Theme from "@themes"
-import Resources from "@resources"
+import Theme from "@themes";
+import Resources from "@resources";
 import { NavigationActions } from "react-navigation";
 import routeConfigMap from "./router";
 import theme from "@themes";
-import IconBadge from "@containers/notifications/badge"
+import IconBadge from "@containers/notifications/badge";
+import AppStatusBar from "@components/AppStatusBar";
 
 const BottomTabStack = createBottomTabNavigator(routeConfigMap.home, {
   navigationOptions: ({ navigation }) => ({
@@ -27,10 +28,16 @@ const BottomTabStack = createBottomTabNavigator(routeConfigMap.home, {
       } else if (routeName === "profile") {
         iconName = "account-circle";
       } else if (routeName === "store") {
-        iconName = "store"
+        iconName = "store";
       }
       return (
-        <IconBadge Key={routeName} set="MaterialIcons" name={iconName} size={24} tintColor={tintColor} />
+        <IconBadge
+          Key={routeName}
+          set="MaterialIcons"
+          name={iconName}
+          size={24}
+          tintColor={tintColor}
+        />
       );
     }
   }),
@@ -88,11 +95,10 @@ class RootNavigator extends React.Component {
 }
 
 class RootContainer extends Component {
-
   static childContextTypes = {
     appTheme: PropTypes.object,
     resource: PropTypes.object
-  }
+  };
 
   _theme = Theme;
   _resource = Resources;
@@ -101,13 +107,13 @@ class RootContainer extends Component {
     return {
       appTheme: this._theme,
       resource: this._resource
-    }
+    };
   }
   static router = {
     ...RootNavigator.router,
     getStateForAction: (action, lastState) => {
       return RootNavigator.router.getStateForAction(action, lastState);
-    },
+    }
   };
 
   componentDidUpdate(lastProps) {
@@ -135,6 +141,7 @@ class RootContainer extends Component {
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
+        <AppStatusBar />
         <RootNavigator navigation={navigation} />
       </View>
     );
@@ -148,8 +155,8 @@ const navMiddleWare = createReactNavigationReduxMiddleware(
 
 const AppWithNavigationState = reduxifyNavigator(RootContainer, "appNavigator");
 
-const mapStateToProps = (state) => ({
-  state: state.nav,
+const mapStateToProps = state => ({
+  state: state.nav
 });
 
 const AppNavigator = connect(mapStateToProps)(AppWithNavigationState);

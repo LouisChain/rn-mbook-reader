@@ -64,6 +64,6 @@ export default class Icon extends React.PureComponent {
 
   _getColor = () => {
     const { appTheme } = this.context;
-    return this.props.color || appTheme.icon.normal;
+    return this.props.color || appTheme.color.normal;
   }
 }

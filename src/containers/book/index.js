@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import {
   Container, Header, Content, List,
   ListItem, Button, View, Text,
-  Title, Left, Body, Right, Icon, Toast
+  Title, Left, Body, Right, Toast
 } from 'native-base';
+import Icon from "@components/Icon"
 import PropTypes from "prop-types";
 import { connect } from "react-redux"
 import { getCategory } from "@actions/book"
@@ -35,11 +36,11 @@ class BookDetail extends PureComponent {
             </Button>
           </Left>
           <Body>
-            <Title>{title}</Title>
+            <Title style={{color: 'black'}}>{title}</Title>
           </Body>
           <Right>
             <Button transparent>
-              {/* <Icon name='account' /> */}
+              <Icon name='report'/>
             </Button>
           </Right>
         </Header>

@@ -25,7 +25,7 @@ export default class Chapter extends PureComponent {
     let { id, title, chapters } = this.props;
     return (
       <Container>
-        <View style={{ padding: 16, paddingTop: 48 }}>
+        <View style={{ padding: 16, paddingTop: 24 }}>
           <Text numberOfLines={1} style={{ fontSize: 24, fontWeight: 'bold' }}>{title}</Text>
           <Text style={{ color: 'gray', marginTop: 8 }}>2/{chapters.length} chapters</Text>
         </View>
