@@ -1,5 +1,5 @@
-import RNFetchBlob from 'rn-fetch-blob'
-import md5 from "md5"
+import RNFetchBlob from "rn-fetch-blob";
+import md5 from "md5";
 
 // const { config, fs } = RNFetchBlob
 // let PictureDir = fs.dirs.PictureDir // this is the pictures directory. You can check the available directories in the wiki.
@@ -15,24 +15,24 @@ import md5 from "md5"
 // config(options).fetch('GET', "http://www.example.com/example.pdf").then((res) => {
 //   // do some magic here
 // })
-const instance = {}
+const instance = {};
 const dirs = RNFetchBlob.fs.dirs;
 
 const hasKey = key => {
   return key in instance;
-}
+};
 
 const remove = key => {
   if (hasKey(key)) {
     delete instance[key];
   }
-}
+};
 
 const put = (key, task) => {
   if (!hasKey(key)) {
     instance[key] = task;
   }
-}
+};
 
 const get = key => {
   if (hasKey(key)) {
@@ -40,45 +40,51 @@ const get = key => {
   } else {
     return undefined;
   }
-}
+};
 
 const getPath = (url, bookId) => {
   return dirs.DocumentDir + "/" + bookId + "/" + md5(url) + ".mp3";
-}
+};
 
 const wasDownloaded = (url, bookId) => {
   return RNFetchBlob.fs.exists(getPath(url, bookId));
-}
+};
 
-const deleteBook = (bookId) => {
+const deleteBook = bookId => {
   let base = dirs.DocumentDir + "/" + bookId + "/";
-  RNFetchBlob.fs.unlink(base);
-}
+  RNFetchBlob.fs.unlink(base).catch(err => {
+    console.log(err + "");
+  });
+};
 
 // this is return a Promise
-const downloadToCache = (url) => {
+const downloadToCache = url => {
   let cache = {
     fileCache: true
-  }
-  return RNFetchBlob
-    .config(cache)
-    .fetch('GET', url)
+  };
+  return RNFetchBlob.config(cache).fetch("GET", url);
   // listen to download progress event, every 10%
   // .progress({ count: 10 }, (received, total) => {
   //   console.log('progress', received / total)
   // })
-}
+};
 
 const download = (url, bookId) => {
   let option = {
     path: getPath(url, bookId)
-  }
-  let task = RNFetchBlob
-    .config(option)
-    .fetch('GET', url);
+  };
+  let task = RNFetchBlob.config(option).fetch("GET", url);
   put(url, task);
   return task;
-}
+};
 
-export { get, put, remove, downloadToCache, download, wasDownloaded, getPath, deleteBook }
-
+export {
+  get,
+  put,
+  remove,
+  downloadToCache,
+  download,
+  wasDownloaded,
+  getPath,
+  deleteBook
+};

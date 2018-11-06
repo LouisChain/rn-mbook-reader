@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { View, Text } from "native-base";
+import { View, Text } from "react-native";
 import Slider from "react-native-slider";
 import { secondToHMS } from "@utils/string";
 import PropTypes from "prop-types";
@@ -18,7 +18,8 @@ export default class AudioTimer extends PureComponent {
   static propTypes = {
     playing: PropTypes.bool,
     duration: PropTypes.number,
-    title: PropTypes.string
+    title: PropTypes.string,
+    lastRead: PropTypes.number
   };
 
   componentWillReceiveProps(nextProps) {
